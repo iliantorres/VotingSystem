@@ -1,1 +1,1 @@
-web: gunicorn upr-2fast4u-voting:app
+web: gunicorn ./src/python/home.py:app
