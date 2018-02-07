@@ -1,0 +1,275 @@
+-- phpMyAdmin SQL Dump
+-- version 4.7.3
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost
+-- Generation Time: Feb 07, 2018 at 05:21 PM
+-- Server version: 5.6.35
+-- PHP Version: 7.1.8
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Database: `2Fast4UVoting`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Create_Group`
+--
+
+CREATE TABLE `Create_Group` (
+  `group_id` varchar(10) NOT NULL,
+  `user_id` varchar(10) NOT NULL,
+  `group_creator` varchar(20) NOT NULL,
+  `group_name` varchar(50) NOT NULL,
+  `date_created` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Create_Group`
+--
+
+INSERT INTO `Create_Group` (`group_id`, `user_id`, `group_creator`, `group_name`, `date_created`) VALUES
+('6a65e9dc-0', '512f0f02-0', 'TheDoctor', 'HeroesUnited', '2018-01-28 12:36:39'),
+('780321fe-0', '512f1ff6-0', 'BlackList', 'Vigilantes', '2018-01-28 12:37:02');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Group_Permission`
+--
+
+CREATE TABLE `Group_Permission` (
+  `permission_id` varchar(10) NOT NULL,
+  `group_id` varchar(10) NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `permission_creator` varchar(50) NOT NULL,
+  `group_name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Group_Permission`
+--
+
+INSERT INTO `Group_Permission` (`permission_id`, `group_id`, `username`, `permission_creator`, `group_name`) VALUES
+('017a557c-0', '6a65e9dc-0', 'JessiJones', 'TheDoctor', 'HeroesUnited'),
+('0744327a-0', '6a65e9dc-0', 'DoctorStrange', 'TheDoctor', 'HeroesUnited'),
+('27526166-0', '6a65e9dc-0', 'FlashMaster', 'TheDoctor', 'HeroesUnited'),
+('6e2f5bfe-0', '780321fe-0', 'JessiJones', 'BlackList', 'Vigilantes'),
+('7b34843c-0', '780321fe-0', 'IronFist', 'BlackList', 'Vigilantes'),
+('812f7162-0', '780321fe-0', 'DareDevil', 'BlackList', 'Vigilantes'),
+('881d15b0-0', '780321fe-0', 'Samuroid', 'BlackList', 'Vigilantes'),
+('f2e81850-0', '6a65e9dc-0', 'Vibe', 'TheDoctor', 'HeroesUnited');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Question`
+--
+
+CREATE TABLE `Question` (
+  `question_id` varchar(15) NOT NULL,
+  `user_id` varchar(10) NOT NULL,
+  `group_name` varchar(50) NOT NULL,
+  `question_creator` varchar(20) NOT NULL,
+  `question_type` varchar(20) NOT NULL,
+  `question_title` varchar(50) NOT NULL,
+  `question_description` varchar(500) NOT NULL,
+  `voting_status` varchar(20) DEFAULT NULL,
+  `question_author` varchar(20) DEFAULT NULL,
+  `date_created` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Question`
+--
+
+INSERT INTO `Question` (`question_id`, `user_id`, `group_name`, `question_creator`, `question_type`, `question_title`, `question_description`, `voting_status`, `question_author`, `date_created`) VALUES
+('018b252a-0517-1', '512f0f02-0', 'HeroesUnited', 'TheDoctor', 'Proposition', 'Rename the TARDIS', 'Rename the doctor’s TARDIS', 'Completed', 'Jessica Jones', '2018-01-29 13:08:20'),
+('1f60be50-0519-1', '512f0f02-0', 'HeroesUnited', 'TheDoctor', 'Proposition', 'Destruction of Killgrave', 'Destruction of Killgrave Description', 'Completed', 'Jessica Jones', '2018-01-29 13:23:29'),
+('28fea472-0519-1', '512f0f02-0', 'HeroesUnited', 'TheDoctor', 'Amendment', 'Destruction of Killgrave ', 'Destruction of Killgrave Amendment Description', 'In-Progress', 'TheDoctor', '2018-01-29 13:23:45'),
+('2f7a6840-0519-1', '512f1ff6-0', 'Vigilantes', 'Blacklist', 'Proposition', 'Destruction of Killgrave', 'Destruction of Killgrave Description', 'Completed', 'Jessica Jones', '2018-01-29 13:23:56');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Results`
+--
+
+CREATE TABLE `Results` (
+  `result_id` varchar(10) NOT NULL,
+  `question_title` varchar(50) NOT NULL,
+  `question_type` varchar(20) NOT NULL,
+  `group_name` varchar(50) NOT NULL,
+  `count_yes` int(3) DEFAULT NULL,
+  `count_no` int(3) DEFAULT NULL,
+  `count_abstain` int(3) DEFAULT NULL,
+  `total_voters` int(3) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Results`
+--
+
+INSERT INTO `Results` (`result_id`, `question_title`, `question_type`, `group_name`, `count_yes`, `count_no`, `count_abstain`, `total_voters`) VALUES
+('b4b0b934-0', 'Destruction of Killgrave', 'Proposition', 'HeroesUnited', 1, 3, 0, 4),
+('bdb6b236-0', 'Destruction of Killgrave', 'Amendment', 'HeroesUnited', 1, 1, 2, 4),
+('c1323b70-0', 'Rename the TARDIS', 'Proposition', 'HeroesUnited', 1, 3, 0, 4),
+('c2e35f70-0', 'Destruction of Killgrave', 'Proposition', 'Vigilantes', 3, 0, 1, 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `User`
+--
+
+CREATE TABLE `User` (
+  `user_id` varchar(10) NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `last_name` varchar(20) NOT NULL,
+  `user_type` varchar(20) NOT NULL,
+  `password` varchar(30) NOT NULL,
+  `email` varchar(30) NOT NULL,
+  `student_number` varchar(15) NOT NULL,
+  `date_created` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `User`
+--
+
+INSERT INTO `User` (`user_id`, `username`, `name`, `last_name`, `user_type`, `password`, `email`, `student_number`, `date_created`) VALUES
+('512f0f02-0', 'TheDoctor', 'NoOne', 'Knows', 'Staff', 'SaraJane', 'testsubject1@gmail.com', '801-44-7821', '2018-01-28 12:00:10'),
+('512f175e-0', 'DoctorStrange', 'Steven', 'Strange', 'User', 'StrangeisBest', 'testsubject2@gmail.com', '555-12-8892', '2018-01-28 12:00:10'),
+('512f1a38-0', 'JessiJones', 'Jessica', 'Jones', 'User', 'KillKillgrave', 'testsubject3@gmail.com', '685-17-0098', '2018-01-28 12:00:10'),
+('512f1cb8-0', 'FlashMaster', 'Barry', 'Allen', 'User', 'FastestManAlive', 'testsubject4@gmail.com', '582-99-2201', '2018-01-28 12:00:10'),
+('512f1e5c-0', 'Samuroid', 'DeVoe', 'Christopher', 'User', 'BrainEnhance', 'testsubject5@gmail.com', '593-86-9175', '2018-01-28 12:00:10'),
+('512f1ff6-0', 'BlackList', 'Redington', 'Raimond', 'Staff', 'Dembe', 'testsubject6@gmail.com', '846-92-3027', '2018-01-28 12:00:10'),
+('512f2172-0', 'IronFist', 'Danny', 'Rand', 'User', 'Kuun-Lun', 'testsubject7@gmail.com', '801-93-9927', '2018-01-28 12:00:10'),
+('512f22da-0', 'DareDevil', 'Matt', 'Murdock', 'User', 'Blind', 'testsubject8@gmail.com', '893-13-3047', '2018-01-28 12:00:10'),
+('512f246a-0', 'Vibe', 'Sisco', 'Ramon', 'User', 'Technokid', 'testsubject9@gmail.com', '893-13-3047', '2018-01-28 12:00:10');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `User_Confirmation`
+--
+
+CREATE TABLE `User_Confirmation` (
+  `user_confirmationID` varchar(10) NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `email` varchar(30) NOT NULL,
+  `Email_key` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `User_Confirmation`
+--
+
+INSERT INTO `User_Confirmation` (`user_confirmationID`, `username`, `email`, `Email_key`) VALUES
+('20766b78-0', 'TheDoctor', 'testsubject1@gmail.com', '20766c36-0820-11e8-b'),
+('26d305a8-0', 'BlackList', 'testsubject6@gmail.com', '26d3065c-0820-11e8-b');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Voting`
+--
+
+CREATE TABLE `Voting` (
+  `voting_id` varchar(20) NOT NULL,
+  `question_id` varchar(10) NOT NULL,
+  `group_name` varchar(50) NOT NULL,
+  `question_title` varchar(50) NOT NULL,
+  `question_type` varchar(20) NOT NULL,
+  `voting_choice` varchar(9) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `Voting`
+--
+
+INSERT INTO `Voting` (`voting_id`, `question_id`, `group_name`, `question_title`, `question_type`, `voting_choice`) VALUES
+('04a1ef8e-051a-11e8-9', '018b252a-0', 'HeroesUnited', 'Rename the TARDIS', 'Proposition', 'Yes'),
+('4febd18e-051b-11e8-9', '1f60be50-0', 'HeroesUnited', 'Destruction of Killgrave', 'Proposition', 'No'),
+('7e621ee4-06d6-11e8-b', '28fea472-0', 'HeroesUnited', 'Destruction of Killgrave ', 'Amendment', 'No'),
+('83ee46f8-06d6-11e8-b', '28fea472-0', 'HeroesUnited', 'Destruction of Killgrave ', 'Amendment', 'Abstain'),
+('866f60ba-06d6-11e8-b', '28fea472-0', 'HeroesUnited', 'Destruction of Killgrave ', 'Amendment', 'Abstain'),
+('86d14970-06d5-11e8-b', '1f60be50-0', 'HeroesUnited', 'Destruction of Killgrave', 'Proposition', 'No'),
+('8a38ef28-06d5-11e8-b', '1f60be50-0', 'HeroesUnited', 'Destruction of Killgrave', 'Proposition', 'No'),
+('8acdd588-06d6-11e8-b', '28fea472-0', 'HeroesUnited', 'Destruction of Killgrave ', 'Amendment', 'Yes'),
+('91a1aa98-06d5-11e8-b', '1f60be50-0', 'HeroesUnited', 'Destruction of Killgrave', 'Proposition', 'Yes'),
+('f60babf4-0519-11e8-9', '018b252a-0', 'HeroesUnited', 'Rename the TARDIS', 'Proposition', 'No'),
+('fe051854-0519-11e8-9', '018b252a-0', 'HeroesUnited', 'Rename the TARDIS', 'Proposition', 'No'),
+('ffc652b6-0519-11e8-9', '018b252a-0', 'HeroesUnited', 'Rename the TARDIS', 'Proposition', 'No');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `Create_Group`
+--
+ALTER TABLE `Create_Group`
+  ADD PRIMARY KEY (`group_id`),
+  ADD UNIQUE KEY `UC_Group` (`group_id`,`group_name`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `Group_Permission`
+--
+ALTER TABLE `Group_Permission`
+  ADD PRIMARY KEY (`permission_id`),
+  ADD UNIQUE KEY `permission_id` (`permission_id`),
+  ADD KEY `group_id` (`group_id`);
+
+--
+-- Indexes for table `Question`
+--
+ALTER TABLE `Question`
+  ADD PRIMARY KEY (`question_id`),
+  ADD UNIQUE KEY `question_id` (`question_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `Results`
+--
+ALTER TABLE `Results`
+  ADD PRIMARY KEY (`result_id`),
+  ADD UNIQUE KEY `result_id` (`result_id`);
+
+--
+-- Indexes for table `User`
+--
+ALTER TABLE `User`
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `UC_User` (`user_id`,`username`,`email`,`student_number`);
+
+--
+-- Indexes for table `User_Confirmation`
+--
+ALTER TABLE `User_Confirmation`
+  ADD PRIMARY KEY (`user_confirmationID`),
+  ADD UNIQUE KEY `UC_User` (`Email_key`);
+
+--
+-- Indexes for table `Voting`
+--
+ALTER TABLE `Voting`
+  ADD PRIMARY KEY (`voting_id`),
+  ADD UNIQUE KEY `voting_id` (`voting_id`),
+  ADD KEY `question_id` (`question_id`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `Create_Group`
+--
+ALTER TABLE `Create_Group`
+  ADD CONSTRAINT `create_group_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `User` (`user_id`);
